@@ -52,9 +52,6 @@ class Dueno(Persona):
         for atraccion in atracciones_parque:
             atraccion.entrada = atraccion.entrada*2
 
-Antonio= Dueno()
-TheLonelyIsland= Parque()
-            
             
 class Atraccion:
     def __init__(self,nombre,capacidad,entrada,costo,tiempo,dueno=Antonio): #El input son todos los datos de una ATRACCION
@@ -99,6 +96,7 @@ class Atraccion:
             
             siguiente.dinero = siguiente.dinero - pago   
             self.dueno.dinero = self.dueno.dinero + pago
+            self.recaudacion = self.recaudacion + pago
             self.usuarios.append(siguiente)
             self.contador_clientes = self.contador_clientes + 1
             
@@ -106,6 +104,9 @@ class Atraccion:
                 self.fallar()                   #PENDIENTE
                 break                           #dejamos de subir clientes
                     
+            #********************AQUI PODEMOS IMPRIMIR LA RECAUDACION
+            
+            self.recaudacion = 0
       
         if len(self.usuarios) > self.capacidad:   #Un paréntesis, para cachar si el programa llegase a fallar
             
@@ -151,18 +152,6 @@ class Atraccion:
         self.usuarios = []                   #los usuarios se van del parque             
         
 
-#class Parque:
-#    def __init__(self,atracciones):                  #el input va a ser una lista con las 5 atracciones más caras
-#    
-#        self.atracciones                             #FALTA CREAR LA CLASE "Atraccion"
-#
-#
-#class Persona:
-#    def __init__(self, dinero = 0):
-#        self.dinero = dinero
-
-
-
 class Visitante(Persona):                
     def __init__(self,tupla,dinero=0):      #***recibirá de input, un elemento de la lista PERSONAS. Ojo con dinero
         super().__init__(dinero)
@@ -190,6 +179,10 @@ class Visitante(Persona):
         else:
             None      #***Quizás haya que hacer un Log aquí. No se hace nada más porque si no se le asigna una nueva 
                       #atracción no se almacenan en ninguna parte del parque, ergo ya no están dentro (SE RETIRARON DIGNAMENTE)
+                
+                
+
+     
 
 
 
