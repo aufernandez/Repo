@@ -166,6 +166,7 @@ class Visitante(Persona):
           
     def elegir_atraccion(self):                             #buscar atracción
         opciones=[]
+        print('AAA')      
         for atraccion in TheLonelyIsland.atracciones:       #***quizás esto se puede hacer con un filter. AJUSTAR NOMBRE PARQUE
             if atraccion.disponible:                    #solo buscaremos sobre las que están disponibl NO están cerradas
                 opciones.append(atraccion)
@@ -176,6 +177,7 @@ class Visitante(Persona):
         
         if pagables:                                    #si la lista no está vacía <-> si hay elecciones pagables
             atraccion_elegida= pagables.pop()           #la de más a la derecha es la más cara
+            print('{0} se sube a {1}'.format(Visitante.nombre,atraccion_elegida)  
             atraccion_elegida.aceptar_visitantes(self)  #ahora metemos al visitante a la cola de su elección     
         else:
             print('A {0} solo le quedan {1}, por lo que decide retirarse dignamente').format(self.nombre,self.dinero)
