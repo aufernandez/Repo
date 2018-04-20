@@ -37,7 +37,7 @@ class Persona(metaclass = ABCMeta):
         
         
 class Parque:
-    def __init__(self,atracciones):  #el input va a ser una lista con las 5 atracciones más caras
+    def __init__(self,atracciones = []):  #el input va a ser una lista con las 5 atracciones más caras
     
         self.atracciones = atracciones
         
@@ -52,9 +52,12 @@ class Dueno(Persona):
         for atraccion in atracciones_parque:
             atraccion.entrada = atraccion.entrada*2
 
+Antonio= Dueno()
+TheLonelyIsland= Parque()
+            
             
 class Atraccion:
-    def __init__(self,nombre,capacidad,entrada,costo,tiempo,dueno=Antonio): #El input son todos los datos de una ATRACCION
+    def __init__(self,nombre,capacidad,entrada,costo,tiempo,dueno): #El input son todos los datos de una ATRACCION
         self.nombre = nombre
         self.capacidad = capacidad
         self.entrada = entrada             #costo_entrada
@@ -79,9 +82,10 @@ class Atraccion:
     def aceptar_visitante (self,visitante):   #visitante es una instancia de la clase Visitante. Acá se suma a la cola
         
         self.cola.append(visitante)
+        print('{0} se va a la cola de {1}'.format(visitante.nombre,self.nombre)
         #print(self.cola)
         
-    def subir_visitantes (self):    #recibe al dueño como argumento, para que se le pague a él la entrada
+    def subir_visitantes (self):  #recibe al dueño como argumento, para que se le pague a él la entrada
 
         for i in range(min(len(self.cola),self.capacidad)):   #Se suben los que quepan, o todos (si es que hay menos que la capacidad)
             #subida
@@ -96,18 +100,14 @@ class Atraccion:
             
             siguiente.dinero = siguiente.dinero - pago   
             self.dueno.dinero = self.dueno.dinero + pago
-            self.recaudacion = self.recaudacion + pago
             self.usuarios.append(siguiente)
             self.contador_clientes = self.contador_clientes + 1
-            
+            self.recaudacion +=pago
             if self.contador_clientes == 100:
                 self.fallar()                   #PENDIENTE
                 break                           #dejamos de subir clientes
-                    
-            #********************AQUI PODEMOS IMPRIMIR LA RECAUDACION
-            
-            self.recaudacion = 0
-      
+        print('{0} recaudó {1} en esta vuelta'.format(self.nombre,self.recaudacion)            
+        self.recaudacion == 0
         if len(self.usuarios) > self.capacidad:   #Un paréntesis, para cachar si el programa llegase a fallar
             
             print("El {} está sobre cargado perrito".format(self.nombre))      
@@ -152,6 +152,7 @@ class Atraccion:
         self.usuarios = []                   #los usuarios se van del parque             
         
 
+
 class Visitante(Persona):                
     def __init__(self,tupla,dinero=0):      #***recibirá de input, un elemento de la lista PERSONAS. Ojo con dinero
         super().__init__(dinero)
@@ -177,12 +178,9 @@ class Visitante(Persona):
             atraccion_elegida= pagables.pop()           #la de más a la derecha es la más cara
             atraccion_elegida.aceptar_visitantes(self)  #ahora metemos al visitante a la cola de su elección     
         else:
-            None      #***Quizás haya que hacer un Log aquí. No se hace nada más porque si no se le asigna una nueva 
+            print('A {0} solo le quedan {1}, por lo que decide retirarse dignamente').format(self.nombre,self.dinero)
+                  #***Quizás haya que hacer un Log aquí. No se hace nada más porque si no se le asigna una nueva 
                       #atracción no se almacenan en ninguna parte del parque, ergo ya no están dentro (SE RETIRARON DIGNAMENTE)
-                
-                
-
-     
 
 
 
